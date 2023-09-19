@@ -39,6 +39,7 @@ def reserv_ticket():
     cd_input_04 = driver.find_element(By.NAME, "txtCardNo4")
     cd_input_04.clear()
     cd_input_04.send_keys('3456')
+    # 카드 휴요기간 선택. 년, 월
 
     # 카드 비밀번호 - ByName
     cd_pw_input = driver.find_element(By.NAME, "txtCCardPwd_1")
@@ -77,13 +78,22 @@ WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="
 time.sleep(3)
 
 got_it = False
-
-while not got_it:
-    for i in range(20):  
+# 선택할 때까지 계속 반복
+while True:
+    # 18시 이후 22시 전까지만 확인
+    for i in range(1, 5):  
         try:
             WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, f'//*[@id="tableResult"]/tbody/tr[{i}]/td[6]/a[1]/img'))).click()
-            print('OK')
+            print('GOT IT!!')
             got_it = reserv_ticket()
-
+            break
         except selenium.common.exceptions.TimeoutException:
-            print('NG')
+            pass
+    # 발권했으면 빠져나감
+    if got_it: break
+    # 5초 대기후 화면 다시 조회
+    time.sleep(5)
+    WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="center"]/div[3]/p/a/img'))).click()
+
+# 종료
+driver.close()
