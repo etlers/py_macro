@@ -22,7 +22,10 @@ id_input.send_keys('byme72')
 pw_input = driver.find_element(By.NAME, "userPwd")
 pw_input.clear()
 pw_input.send_keys('wndyd@801')
-pw_input.send_keys(Keys.RETURN)
+# pw_input.send_keys(Keys.RETURN)
+
+while True:
+    1 == 1
 
 # 메뉴 - 연극 이미지 클릭
 WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, 'btn_play'))).send_keys(Keys.ENTER)
